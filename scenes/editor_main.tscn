@@ -1,0 +1,635 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3nclnndxz9vv24"]
+
+[ext_resource type="Script" path="res://scripts/ui/top_bar.gd" id="1_v1nxl"]
+[ext_resource type="Script" path="res://scripts/ui/left_tool_rail.gd" id="2_2dq8s"]
+[ext_resource type="Script" path="res://scripts/ui/details_panel.gd" id="3_3lkpj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_Flat"]
+bg_color = Color(0.15, 0.15, 0.25, 0.95)
+border_color = Color(0.3, 0.2, 0.5, 0.5)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_Dark"]
+bg_color = Color(0.1, 0.1, 0.15, 0.9)
+border_color = Color(0.2, 0.1, 0.3, 0.4)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_Hover"]
+bg_color = Color(0.2, 0.15, 0.35, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_Pressed"]
+bg_color = Color(0.7, 0.4, 1.0, 0.6)
+border_color = Color(0.9, 0.5, 1.0, 1.0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[node name="EditorMain" type="Control"]
+layout_mode = 1
+anchors_left = 0.0
+anchors_top = 0.0
+anchors_right = 1.0
+anchors_bottom = 1.0
+script = preload("res://scripts/ui/editor_main.gd")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_left = 0.0
+anchors_top = 0.0
+anchors_right = 1.0
+anchors_bottom = 1.0
+
+# TOP BAR
+[node name="TopBar" type="PanelContainer" parent="MainContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+theme_override_styles/panel = SubResource("StyleBox_Dark")
+script = ExtResource("1_v1nxl")
+
+[node name="TopBarContent" type="HBoxContainer" parent="MainContainer/TopBar"]
+layout_mode = 2
+alignment = 1
+
+# Branding Section
+[node name="BrandingSection" type="HBoxContainer" parent="MainContainer/TopBar/TopBarContent"]
+layout_mode = 2
+size_flags_horizontal = 1
+custom_minimum_size = Vector2(200, 0)
+
+[node name="BrandIcon" type="TextureRect" parent="MainContainer/TopBar/TopBarContent/BrandingSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(40, 40)
+expand_ignore_size = true
+texture = preload("res://assets/lucidity_icon.png")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/TopBar/TopBarContent/BrandingSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BrandLabel" type="Label" parent="MainContainer/TopBar/TopBarContent/BrandingSection/VBoxContainer"]
+layout_mode = 2
+text = "LUCIDITY"
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="ProjectLabel" type="Label" parent="MainContainer/TopBar/TopBarContent/BrandingSection/VBoxContainer"]
+layout_mode = 2
+text = "My World"
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="AutosaveLabel" type="Label" parent="MainContainer/TopBar/TopBarContent/BrandingSection/VBoxContainer"]
+layout_mode = 2
+text = "Autosaved 2m ago"
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
+
+# Mode Navigation
+[node name="ModeNavigation" type="HBoxContainer" parent="MainContainer/TopBar/TopBarContent"]
+layout_mode = 2
+alignment = 1
+
+[node name="CreateButton" type="Button" parent="MainContainer/TopBar/TopBarContent/ModeNavigation"]
+layout_mode = 2
+text = "CREATE"
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+theme_override_styles/pressed = SubResource("StyleBox_Pressed")
+
+[node name="EditButton" type="Button" parent="MainContainer/TopBar/TopBarContent/ModeNavigation"]
+layout_mode = 2
+text = "EDIT"
+toggle_mode = true
+button_pressed = true
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+theme_override_styles/pressed = SubResource("StyleBox_Pressed")
+
+[node name="PlayButton" type="Button" parent="MainContainer/TopBar/TopBarContent/ModeNavigation"]
+layout_mode = 2
+text = "PLAY"
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+theme_override_styles/pressed = SubResource("StyleBox_Pressed")
+
+[node name="HomeButton" type="Button" parent="MainContainer/TopBar/TopBarContent/ModeNavigation"]
+layout_mode = 2
+text = "HOME"
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+theme_override_styles/pressed = SubResource("StyleBox_Pressed")
+
+# Right Controls
+[node name="RightControls" type="HBoxContainer" parent="MainContainer/TopBar/TopBarContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(300, 0)
+alignment = 2
+
+[node name="StatsSection" type="HBoxContainer" parent="MainContainer/TopBar/TopBarContent/RightControls"]
+layout_mode = 2
+
+[node name="FPSLabel" type="Label" parent="MainContainer/TopBar/TopBarContent/RightControls/StatsSection"]
+layout_mode = 2
+text = "FPS"
+theme_override_font_sizes/font_size = 11
+
+[node name="FPSValue" type="Label" parent="MainContainer/TopBar/TopBarContent/RightControls/StatsSection"]
+layout_mode = 2
+text = "120"
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="DrawLabel" type="Label" parent="MainContainer/TopBar/TopBarContent/RightControls/StatsSection"]
+layout_mode = 2
+text = "Draw Calls"
+theme_override_font_sizes/font_size = 11
+
+[node name="DrawValue" type="Label" parent="MainContainer/TopBar/TopBarContent/RightControls/StatsSection"]
+layout_mode = 2
+text = "1,234"
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="MemoryLabel" type="Label" parent="MainContainer/TopBar/TopBarContent/RightControls/StatsSection"]
+layout_mode = 2
+text = "Memory"
+theme_override_font_sizes/font_size = 11
+
+[node name="MemoryValue" type="Label" parent="MainContainer/TopBar/TopBarContent/RightControls/StatsSection"]
+layout_mode = 2
+text = "1.2 GB"
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+# Profile & Help
+[node name="ProfileSection" type="HBoxContainer" parent="MainContainer/TopBar/TopBarContent/RightControls"]
+layout_mode = 2
+
+[node name="ProfileButton" type="Button" parent="MainContainer/TopBar/TopBarContent/RightControls/ProfileSection"]
+layout_mode = 2
+text = "Mistyy"
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+
+[node name="HelpButton" type="Button" parent="MainContainer/TopBar/TopBarContent/RightControls/ProfileSection"]
+layout_mode = 2
+text = "?"
+custom_minimum_size = Vector2(40, 0)
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+
+[node name="SettingsButton" type="Button" parent="MainContainer/TopBar/TopBarContent/RightControls/ProfileSection"]
+layout_mode = 2
+text = "⚙"
+custom_minimum_size = Vector2(40, 0)
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+
+# CENTER CONTENT
+[node name="CenterContent" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+# LEFT TOOL RAIL
+[node name="LeftToolRail" type="PanelContainer" parent="MainContainer/CenterContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(70, 0)
+theme_override_styles/panel = SubResource("StyleBox_Dark")
+script = ExtResource("2_2dq8s")
+
+[node name="ToolContainer" type="VBoxContainer" parent="MainContainer/CenterContent/LeftToolRail"]
+layout_mode = 2
+
+[node name="SelectTool" type="Button" parent="MainContainer/CenterContent/LeftToolRail/ToolContainer"]
+layout_mode = 2
+text = "Select"
+custom_minimum_size = Vector2(60, 60)
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+theme_override_styles/pressed = SubResource("StyleBox_Pressed")
+
+[node name="MoveTool" type="Button" parent="MainContainer/CenterContent/LeftToolRail/ToolContainer"]
+layout_mode = 2
+text = "Move"
+custom_minimum_size = Vector2(60, 60)
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+
+[node name="RotateTool" type="Button" parent="MainContainer/CenterContent/LeftToolRail/ToolContainer"]
+layout_mode = 2
+text = "Rotate"
+custom_minimum_size = Vector2(60, 60)
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+
+[node name="ScaleTool" type="Button" parent="MainContainer/CenterContent/LeftToolRail/ToolContainer"]
+layout_mode = 2
+text = "Scale"
+custom_minimum_size = Vector2(60, 60)
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+
+[node name="SculptTool" type="Button" parent="MainContainer/CenterContent/LeftToolRail/ToolContainer"]
+layout_mode = 2
+text = "Sculpt"
+custom_minimum_size = Vector2(60, 60)
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+
+[node name="PaintTool" type="Button" parent="MainContainer/CenterContent/LeftToolRail/ToolContainer"]
+layout_mode = 2
+text = "Paint"
+custom_minimum_size = Vector2(60, 60)
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+
+[node name="LogicTool" type="Button" parent="MainContainer/CenterContent/LeftToolRail/ToolContainer"]
+layout_mode = 2
+text = "Logic"
+custom_minimum_size = Vector2(60, 60)
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+
+[node name="BehaviorTool" type="Button" parent="MainContainer/CenterContent/LeftToolRail/ToolContainer"]
+layout_mode = 2
+text = "Behavior"
+custom_minimum_size = Vector2(60, 60)
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+
+[node name="MoreTool" type="Button" parent="MainContainer/CenterContent/LeftToolRail/ToolContainer"]
+layout_mode = 2
+text = "More"
+custom_minimum_size = Vector2(60, 60)
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+theme_override_styles/hover = SubResource("StyleBox_Hover")
+
+# CENTER SPLIT - Viewport and Right Panel
+[node name="CenterSplit" type="HSplitContainer" parent="MainContainer/CenterContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+# VIEWPORT AREA
+[node name="ViewportContainer" type="PanelContainer" parent="MainContainer/CenterContent/CenterSplit"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBox_Dark")
+
+[node name="ViewportContent" type="VBoxContainer" parent="MainContainer/CenterContent/CenterSplit/ViewportContainer"]
+layout_mode = 2
+
+[node name="Viewport" type="SubViewport" parent="MainContainer/CenterContent/CenterSplit/ViewportContainer/ViewportContent"]
+handle_input_locally = false
+size = Vector2(800, 600)
+render_target_update_mode = 4
+
+[node name="ViewportRect" type="TextureRect" parent="MainContainer/CenterContent/CenterSplit/ViewportContainer/ViewportContent"]
+layout_mode = 2
+size_flags_vertical = 3
+expand_ignore_size = true
+texture = SubResource("NoTexture")
+stretch_mode = 1
+
+[node name="ViewportStatusBar" type="HBoxContainer" parent="MainContainer/CenterContent/CenterSplit/ViewportContainer/ViewportContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 30)
+
+[node name="SelectLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/ViewportContainer/ViewportContent/ViewportStatusBar"]
+layout_mode = 2
+text = "Select"
+theme_override_font_sizes/font_size = 10
+
+[node name="FocusLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/ViewportContainer/ViewportContent/ViewportStatusBar"]
+layout_mode = 2
+text = "R: Focus"
+theme_override_font_sizes/font_size = 10
+
+[node name="QuickMenuLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/ViewportContainer/ViewportContent/ViewportStatusBar"]
+layout_mode = 2
+text = "F: Add to Quick Menu"
+theme_override_font_sizes/font_size = 10
+
+# RIGHT DETAILS PANEL
+[node name="DetailsPanel" type="PanelContainer" parent="MainContainer/CenterContent/CenterSplit"]
+layout_mode = 2
+custom_minimum_size = Vector2(320, 0)
+theme_override_styles/panel = SubResource("StyleBox_Dark")
+script = ExtResource("3_3lkpj")
+
+[node name="DetailContent" type="VBoxContainer" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel"]
+layout_mode = 2
+
+[node name="HeaderSection" type="HBoxContainer" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+
+[node name="ObjectNameLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/HeaderSection"]
+layout_mode = 2
+text = "Golden SDF Cube"
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="TransformSection" type="VBoxContainer" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 200)
+
+[node name="TransformLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection"]
+layout_mode = 2
+text = "Transform"
+theme_override_font_sizes/font_size = 12
+
+[node name="PositionLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection"]
+layout_mode = 2
+text = "Position"
+theme_override_font_sizes/font_size = 11
+
+[node name="PositionContainer" type="HBoxContainer" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 30)
+
+[node name="PosXLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/PositionContainer"]
+layout_mode = 2
+text = "X"
+custom_minimum_size = Vector2(20, 0)
+
+[node name="PosXValue" type="LineEdit" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/PositionContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="PosYLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/PositionContainer"]
+layout_mode = 2
+text = "Y"
+custom_minimum_size = Vector2(20, 0)
+
+[node name="PosYValue" type="LineEdit" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/PositionContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0.5"
+
+[node name="PosZLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/PositionContainer"]
+layout_mode = 2
+text = "Z"
+custom_minimum_size = Vector2(20, 0)
+
+[node name="PosZValue" type="LineEdit" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/PositionContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="RotationLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection"]
+layout_mode = 2
+text = "Rotation"
+theme_override_font_sizes/font_size = 11
+
+[node name="RotationContainer" type="HBoxContainer" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 30)
+
+[node name="RotXLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/RotationContainer"]
+layout_mode = 2
+text = "X"
+custom_minimum_size = Vector2(20, 0)
+
+[node name="RotXValue" type="LineEdit" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/RotationContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0°"
+
+[node name="RotYLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/RotationContainer"]
+layout_mode = 2
+text = "Y"
+custom_minimum_size = Vector2(20, 0)
+
+[node name="RotYValue" type="LineEdit" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/RotationContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0°"
+
+[node name="RotZLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/RotationContainer"]
+layout_mode = 2
+text = "Z"
+custom_minimum_size = Vector2(20, 0)
+
+[node name="RotZValue" type="LineEdit" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/RotationContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0°"
+
+[node name="ScaleLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection"]
+layout_mode = 2
+text = "Scale"
+theme_override_font_sizes/font_size = 11
+
+[node name="ScaleContainer" type="HBoxContainer" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 30)
+
+[node name="ScaleXLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/ScaleContainer"]
+layout_mode = 2
+text = "X"
+custom_minimum_size = Vector2(20, 0)
+
+[node name="ScaleXValue" type="LineEdit" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/ScaleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="ScaleYLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/ScaleContainer"]
+layout_mode = 2
+text = "Y"
+custom_minimum_size = Vector2(20, 0)
+
+[node name="ScaleYValue" type="LineEdit" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/ScaleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="ScaleZLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/ScaleContainer"]
+layout_mode = 2
+text = "Z"
+custom_minimum_size = Vector2(20, 0)
+
+[node name="ScaleZValue" type="LineEdit" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/TransformSection/ScaleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="AppearanceSection" type="VBoxContainer" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+
+[node name="AppearanceLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/AppearanceSection"]
+layout_mode = 2
+text = "▸ Appearance"
+theme_override_font_sizes/font_size = 11
+
+[node name="PhysicsSection" type="VBoxContainer" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+
+[node name="PhysicsLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/PhysicsSection"]
+layout_mode = 2
+text = "▸ Physics"
+theme_override_font_sizes/font_size = 11
+
+[node name="BehaviorSection" type="VBoxContainer" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+
+[node name="BehaviorLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/BehaviorSection"]
+layout_mode = 2
+text = "▸ Behavior"
+theme_override_font_sizes/font_size = 11
+
+[node name="AdvancedSection" type="VBoxContainer" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+
+[node name="AdvancedLabel" type="Label" parent="MainContainer/CenterContent/CenterSplit/DetailsPanel/DetailContent/AdvancedSection"]
+layout_mode = 2
+text = "▸ Advanced"
+theme_override_font_sizes/font_size = 11
+
+# BOTTOM PANELS
+[node name="BottomContent" type="HSplitContainer" parent="MainContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 250)
+
+# Asset Browser
+[node name="AssetBrowser" type="PanelContainer" parent="MainContainer/BottomContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBox_Dark")
+
+[node name="AssetContent" type="VBoxContainer" parent="MainContainer/BottomContent/AssetBrowser"]
+layout_mode = 2
+
+[node name="AssetHeader" type="HBoxContainer" parent="MainContainer/BottomContent/AssetBrowser/AssetContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+
+[node name="AssetBrowserLabel" type="Label" parent="MainContainer/BottomContent/AssetBrowser/AssetContent/AssetHeader"]
+layout_mode = 2
+text = "ASSET BROWSER"
+theme_override_font_sizes/font_size = 12
+
+[node name="SearchBar" type="HBoxContainer" parent="MainContainer/BottomContent/AssetBrowser/AssetContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 35)
+
+[node name="SearchIcon" type="Label" parent="MainContainer/BottomContent/AssetBrowser/AssetContent/SearchBar"]
+layout_mode = 2
+text = "🔍"
+
+[node name="SearchField" type="LineEdit" parent="MainContainer/BottomContent/AssetBrowser/AssetContent/SearchBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search assets..."
+
+[node name="FilterButton" type="Button" parent="MainContainer/BottomContent/AssetBrowser/AssetContent/SearchBar"]
+layout_mode = 2
+text = "All Types"
+
+[node name="AssetGrid" type="GridContainer" parent="MainContainer/BottomContent/AssetBrowser/AssetContent"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 4
+
+# Placeholder asset cards
+[node name="AssetCard1" type="PanelContainer" parent="MainContainer/BottomContent/AssetBrowser/AssetContent/AssetGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(100, 120)
+theme_override_styles/panel = SubResource("StyleBox_Flat")
+
+[node name="AssetLabel1" type="Label" parent="MainContainer/BottomContent/AssetBrowser/AssetContent/AssetGrid/AssetCard1"]
+layout_mode = 2
+text = "SDF Cube"
+theme_override_font_sizes/font_size = 11
+
+[node name="AssetCard2" type="PanelContainer" parent="MainContainer/BottomContent/AssetBrowser/AssetContent/AssetGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(100, 120)
+theme_override_styles/panel = SubResource("StyleBox_Flat")
+
+[node name="AssetLabel2" type="Label" parent="MainContainer/BottomContent/AssetBrowser/AssetContent/AssetGrid/AssetCard2"]
+layout_mode = 2
+text = "SDF Sphere"
+theme_override_font_sizes/font_size = 11
+
+# Logic Graph
+[node name="LogicGraph" type="PanelContainer" parent="MainContainer/BottomContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(350, 0)
+theme_override_styles/panel = SubResource("StyleBox_Dark")
+
+[node name="LogicContent" type="VBoxContainer" parent="MainContainer/BottomContent/LogicGraph"]
+layout_mode = 2
+
+[node name="LogicHeader" type="HBoxContainer" parent="MainContainer/BottomContent/LogicGraph/LogicContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+
+[node name="LogicGraphLabel" type="Label" parent="MainContainer/BottomContent/LogicGraph/LogicContent/LogicHeader"]
+layout_mode = 2
+text = "LOGIC GRAPH"
+theme_override_font_sizes/font_size = 12
+
+[node name="LogicControls" type="HBoxContainer" parent="MainContainer/BottomContent/LogicGraph/LogicContent/LogicHeader"]
+layout_mode = 2
+alignment = 2
+
+[node name="AddButton" type="Button" parent="MainContainer/BottomContent/LogicGraph/LogicContent/LogicHeader/LogicControls"]
+layout_mode = 2
+text = "+"
+custom_minimum_size = Vector2(30, 30)
+
+[node name="ExpandButton" type="Button" parent="MainContainer/BottomContent/LogicGraph/LogicContent/LogicHeader/LogicControls"]
+layout_mode = 2
+text = "⛶"
+custom_minimum_size = Vector2(30, 30)
+
+[node name="LogicGraphArea" type="Control" parent="MainContainer/BottomContent/LogicGraph/LogicContent"]
+layout_mode = 2
+size_flags_vertical = 3
+
+# BOTTOM STATUS BAR
+[node name="BottomStatusBar" type="PanelContainer" parent="MainContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 30)
+theme_override_styles/panel = SubResource("StyleBox_Dark")
+
+[node name="StatusContent" type="HBoxContainer" parent="MainContainer/BottomStatusBar"]
+layout_mode = 2
+
+[node name="FeedbackButton" type="Button" parent="MainContainer/BottomStatusBar/StatusContent"]
+layout_mode = 2
+text = "Feedback"
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+
+[node name="ConsoleButton" type="Button" parent="MainContainer/BottomStatusBar/StatusContent"]
+layout_mode = 2
+text = "Console"
+theme_override_styles/normal = SubResource("StyleBox_Flat")
+
+[node name="Spacer" type="Control" parent="MainContainer/BottomStatusBar/StatusContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AutoSaveIndicator" type="Label" parent="MainContainer/BottomStatusBar/StatusContent"]
+layout_mode = 2
+text = "Auto Save"
+theme_override_font_sizes/font_size = 10
+
+[node name="VersionLabel" type="Label" parent="MainContainer/BottomStatusBar/StatusContent"]
+layout_mode = 2
+text = "Version 1.0.0-alpha.24"
+theme_override_font_sizes/font_size = 10
