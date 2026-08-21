@@ -1,7 +1,5 @@
 extends Control
 
-@onready var logic_area = parent.get_node("LogicContent/LogicGraphArea")
-
 var graph_nodes = []
 var graph_wires = []
 var pan_offset = Vector2.ZERO
@@ -22,10 +20,11 @@ func _create_test_nodes():
 	
 	graph_nodes = [node1, node2, node3, node4, node5, node6]
 
-func _create_logic_node(label: String, position: Vector2, color: Color) -> Control:
+func _create_logic_node(label: String, position: Vector2, color: Color) -> PanelContainer:
 	var node = PanelContainer.new()
 	node.position = position
 	node.custom_minimum_size = Vector2(120, 60)
+	node.mouse_filter = Control.MOUSE_FILTER_STOP
 	
 	var style = StyleBoxFlat.new()
 	style.bg_color = color
@@ -39,7 +38,7 @@ func _create_logic_node(label: String, position: Vector2, color: Color) -> Contr
 	label_node.set_anchors_preset(Control.PRESET_CENTER)
 	node.add_child(label_node)
 	
-	logic_area.add_child(node)
+	add_child(node)
 	return node
 
 func _input(event: InputEvent):
